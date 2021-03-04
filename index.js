@@ -9,10 +9,11 @@ app.use(cors());
 
 const mongoose = require("mongoose");
 
+// Create database
+
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
 });
 
 // import des routes
@@ -28,6 +29,10 @@ app.use(convenantRoutes);
 //   Test
 app.get("/", (req, res) => {
   res.json({ message: "Welcome on Formation-Plus!" });
+});
+
+app.all("*", (req, res) => {
+  res.status(400).json({ message: "Cette route n'existe pas" });
 });
 
 app.listen(process.env.PORT, () => {
